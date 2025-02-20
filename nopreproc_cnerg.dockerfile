@@ -8,9 +8,14 @@ ENV HDF5_ROOT=/root/opt/hdf5/hdf5-1_12_0/
 RUN mkdir -p $HOME/root/openmc/build && \
     cd $HOME/root/openmc && \
     git clone --recurse-submodules https://github.com/openmc-dev/openmc.git && \
+    cd openmc && \
+    git checkout 5bc04b5d78b83684685ccf53564498493e2b6a93 && \
+    cd ../ && \
     cd build && \
     cmake ../openmc \
     -DCMAKE_INSTALL_PREFIX=$HOME/opt/openmc \
+    -DOPENMC_USE_LIBMESH=on \    
+    -DCMAKE_PREFIX_PATH=$HOME/libmesh/libmesh_bld \
     -DOPENMC_USE_DAGMC=ON \
     -DDAGMC_ROOT=$HOME/opt/dagmc \
     -DCMAKE_BUILD_TYPE=Release .. && \
